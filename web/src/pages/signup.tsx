@@ -89,10 +89,7 @@ const Signup = () => {
   }
 
   return (
-    <PageTheme
-      className="flex flex-col justify-center items-center gap-5"
-      isNotLogin={false}
-    >
+    <div className="flex flex-col h-[100vh] justify-center items-center p-3 bg-background">
       <div className="w-full">
         {error.display && (
           <Alert variant={"destructive"}>
@@ -102,7 +99,7 @@ const Signup = () => {
           </Alert>
         )}
       </div>
-      <div className="w-full flex flex-col border py-5 px-5 rounded-lg border-muted-foreground">
+      <div className="md:w-[400px] w-full  flex flex-col border py-5 px-5 rounded-lg border-muted-foreground">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
             <FormField
@@ -199,7 +196,7 @@ const Signup = () => {
           login instead
         </Link>
       </div>
-    </PageTheme>
+    </div>
   );
 };
 

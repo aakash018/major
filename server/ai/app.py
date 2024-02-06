@@ -23,7 +23,7 @@ cnn_model_path='./Tomato_Model_Export_2'
 cnn_model = load_model(cnn_model_path)
 
 
-model = load_model("./unet_binary_2.hdf5", compile=False)
+model = load_model("./unet_binary_1.hdf5", compile=False)
 
 class_names = [
     "Tomato Bacterial spot",

@@ -59,7 +59,7 @@ const Add: React.FC = () => {
     <ProtectedRoutes>
       <PageTheme>
         <div className="w-full h-[70vh] flex flex-col justify-center items-center">
-          <div className="w-full flex flex-col items-center mt-7 justify-center">
+          <div className="w-full md:w-[400px] flex flex-col items-center mt-7 justify-center">
             <div
               onClick={() => {
                 if (imageInputRef.current) imageInputRef.current.click();
@@ -92,7 +92,7 @@ const Add: React.FC = () => {
               }}
             />
           </div>
-          <div className="w-full flex flex-col gap-5">
+          <div className="w-full flex flex-col gap-5 md:w-[400px]">
             <div>
               <Input
                 placeholder="Name"

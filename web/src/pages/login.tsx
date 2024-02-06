@@ -72,66 +72,65 @@ const Login = () => {
   }
 
   return (
-    <PageTheme
-      className="w-[100vw] flex flex-col justify-center items-center gap-5 "
-      isNotLogin={false}
-    >
-      <div className="w-full">
-        {error.display && (
-          <Alert variant={"destructive"}>
-            <Warning />
-            <AlertTitle>Alert</AlertTitle>
-            <AlertDescription>error</AlertDescription>
-          </Alert>
-        )}
+    <div className="w-[100vw] h-[100vh] bg-background flex flex-col justify-center items-center ">
+      <div>
+        <div className="w-full">
+          {error.display && (
+            <Alert variant={"destructive"}>
+              <Warning />
+              <AlertTitle>Alert</AlertTitle>
+              <AlertDescription>error</AlertDescription>
+            </Alert>
+          )}
+        </div>
+        <div className="w-full md:w-[400px] flex flex-col border py-10 px-5 rounded-lg border-muted-foreground">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <>
+                    <FormItem>
+                      <FormLabel>Username</FormLabel>
+                      <FormControl>
+                        <Input placeholder="username" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  </>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <>
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="password"
+                          type="password"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  </>
+                )}
+              />
+              <Button type="submit" className="w-full">
+                Submit
+              </Button>
+            </form>
+          </Form>
+          <Link to={"/signup"} className="mt-5 text-center cursor-pointer">
+            signup instead
+          </Link>
+        </div>
       </div>
-      <div className="w-full flex flex-col border py-10 px-5 rounded-lg border-muted-foreground">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <>
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input placeholder="username" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                </>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <>
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="password"
-                        type="password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                </>
-              )}
-            />
-            <Button type="submit" className="w-full">
-              Submit
-            </Button>
-          </form>
-        </Form>
-        <Link to={"/signup"} className="mt-5 text-center cursor-pointer">
-          signup instead
-        </Link>
-      </div>
-    </PageTheme>
+    </div>
   );
 };
 

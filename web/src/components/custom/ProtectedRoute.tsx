@@ -11,7 +11,7 @@ interface Props {
 }
 
 const ProtectedRoutes: React.FC<Props> = ({ children }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const { setUser } = useUser();
@@ -22,6 +22,7 @@ const ProtectedRoutes: React.FC<Props> = ({ children }) => {
     }
 
     (async () => {
+      setLoading(true);
       const res = await axios.get<
         ServerResponse & { accessToken?: string; user?: User }
       >(

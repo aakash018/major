@@ -96,10 +96,15 @@ router.get("/getPlants", validateUser, async (req, res) => {
       where: {
         userId: req.decoded.userId,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
       select: {
         imageURL: true,
         id: true,
         name: true,
+        createdAt: true,
+        disease: true,
       },
     });
     res.json({
@@ -180,6 +185,33 @@ router.get("/getDashInfo", validateUser, async (req, res) => {
     res.json({
       status: "ok",
       message: "failed to get data",
+    });
+  }
+});
+
+router.get("/getPlantByMonth", validateUser, async (req, res) => {
+  try {
+    const result = await prisma.$queryRaw`
+      SELECT 
+    CAST(EXTRACT(MONTH FROM "createdAt") AS INTEGER)::INT AS month, 
+    COUNT(*)::INT AS count
+    FROM "Plant"
+    WHERE EXTRACT(YEAR FROM "createdAt") = EXTRACT(YEAR FROM CURRENT_DATE)
+    AND EXTRACT(MONTH FROM "createdAt") = EXTRACT(MONTH FROM CURRENT_DATE)
+    AND "userId" = ${req.decoded.userId}
+    GROUP BY month
+    `;
+
+    res.json({
+      status: "ok",
+      message: "data found",
+      plantByMonth: result,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      status: "fail",
+      message: "server error",
     });
   }
 });

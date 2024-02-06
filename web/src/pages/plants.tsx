@@ -50,40 +50,45 @@ const Plants = () => {
   return (
     <ProtectedRoutes>
       <PageTheme>
-        <div className="mt-5 flex flex-col gap-5">
-          {plants.map((plant, i) => (
-            <Card className="w-full" key={i}>
-              <CardHeader>
-                <CardTitle>
-                  <div className="flex gap-5">
-                    <div className="w-[80px] h-[80px] bg-black">
-                      <img
-                        src={plant.imageURL}
-                        alt="image"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <div>{plant.name}</div>
-                      <div className="text-muted-foreground font-normal text-sm">
-                        {"02/03/2024"}
+        <div className="flex justify-center mt-10">
+          <div className="mt-5 flex flex-col gap-8 lg:w-[60%] md:w-[90%] w-full">
+            {plants.map((plant, i) => (
+              <Card className="w-full" key={i}>
+                <CardHeader>
+                  <CardTitle>
+                    <div className="flex gap-7">
+                      <div className="w-[80px] md:w-[120px] md:h-[120px] md:rounded-full md:overflow-hidden h-[80px] bg-black">
+                        <img
+                          src={plant.imageURL}
+                          alt="image"
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-                      <div className="mt-2">
-                        <Button
-                          variant={"default"}
-                          onClick={() => {
-                            nav(`/plant/${plant.id}`);
-                          }}
-                        >
-                          View Details
-                        </Button>
+                      <div>
+                        <div>{plant.name}</div>
+                        <div className="text-muted-foreground font-normal text-sm">
+                          {new Date(plant.createdAt).toLocaleString()}
+                        </div>
+                        <div className="text-muted-foreground font-normal text-sm text-red-600 font-semibold">
+                          {plant.disease}
+                        </div>
+                        <div className="mt-2">
+                          <Button
+                            variant={"default"}
+                            onClick={() => {
+                              nav(`/plant/${plant.id}`);
+                            }}
+                          >
+                            View Details
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </CardTitle>
-              </CardHeader>
-            </Card>
-          ))}
+                  </CardTitle>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
         </div>
       </PageTheme>
     </ProtectedRoutes>

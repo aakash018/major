@@ -57,7 +57,7 @@ const PlantInfo = () => {
           {plant && (
             <>
               {" "}
-              <div className="flex items-center gap-3 ">
+              <div className="flex items-center gap-3 md:gap-10">
                 <div className="w-[150px] h-[150px] rounded-full overflow-hidden">
                   <img
                     src={plant.imageURL}
@@ -80,7 +80,7 @@ const PlantInfo = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between md:justify-center md:gap-7">
                 <NumberCard
                   title={"Added at"}
                   number={new Date(plant.createdAt).getDate()}
@@ -99,60 +99,71 @@ const PlantInfo = () => {
                   desc={"%"}
                 />
               </div>
-              <div className="">
-                <div className="font-bold text-primary mb-2">Segmentation</div>
-                <Tabs
-                  defaultValue="Unet"
-                  className="w-full flex flex-col gap-1"
-                >
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="Unet">Unet</TabsTrigger>
-                    <TabsTrigger value="YOLO">YOLO</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="Unet">
-                    <img
-                      src={plant.imageURL}
-                      alt=""
-                      className="w-full h-[300px] object-cover rounded-lg"
-                    />
-                  </TabsContent>
-                  <TabsContent value="YOLO">
-                    <img
-                      src={plant.unetURL}
-                      alt=""
-                      className="w-full h-[300px] object-cover rounded-lg"
-                    />
-                  </TabsContent>
-                </Tabs>
+              <div className="md:w-full md:flex md:justify-center">
+                <div className="md:w-[80%]">
+                  <div className="font-bold text-primary mb-2">
+                    Segmentation
+                  </div>
+                  <Tabs
+                    defaultValue="Unet"
+                    className="w-full flex flex-col gap-1"
+                  >
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="Unet">Unet</TabsTrigger>
+                      <TabsTrigger value="YOLO">YOLO</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="Unet">
+                      <img
+                        src={plant.imageURL}
+                        alt=""
+                        className="w-full h-[300px] md:h-[600px] md:object-top object-cover rounded-lg"
+                      />
+                    </TabsContent>
+                    <TabsContent value="YOLO">
+                      <img
+                        src={plant.unetURL}
+                        alt=""
+                        className="w-full h-[300px] md:h-[600px] md:object-top object-cover rounded-lg"
+                      />
+                    </TabsContent>
+                  </Tabs>
+                </div>
               </div>
-              <div>
-                <div className="text-primary font-bold">About Infection</div>
-                <div>{plantDiseaseData[plant.disease].about_infection}</div>
-              </div>
-              <div>
-                <h2 className="text-primary font-bold  mb-2">
-                  Treatment Steps
-                </h2>
-                <ol className="list-decimal ml-6 mb-4">
-                  {plantDiseaseData[plant.disease].treatment_steps.map(
-                    (method, i) => (
-                      <li className="mb-2" key={i}>
-                        {method}
-                      </li>
-                    )
-                  )}
-                </ol>
-
-                <h2 className="text-primary font-bold mb-2">Prevention Tips</h2>
-                <ul className="list-disc ml-6 mb-4">
-                  {plantDiseaseData[plant.disease].prevention_methods.map(
-                    (method, i) => (
-                      <li className="mb-2" key={i}>
-                        {method}
-                      </li>
-                    )
-                  )}
-                </ul>
+              <div className="md:flex md:justify-center mt-10">
+                <div className="md:w-[80%]">
+                  <div>
+                    <div className="text-primary font-bold">
+                      About Infection
+                    </div>
+                    <div>{plantDiseaseData[plant.disease].about_infection}</div>
+                  </div>
+                  <div>
+                    <h2 className="text-primary font-bold  mb-2 mt-8">
+                      Treatment Steps
+                    </h2>
+                    <ol className="list-decimal ml-6 mb-4">
+                      {plantDiseaseData[plant.disease].treatment_steps.map(
+                        (method, i) => (
+                          <li className="mb-2" key={i}>
+                            {method}
+                          </li>
+                        )
+                      )}
+                    </ol>
+                    <h2 className="text-primary font-bold mb-2 mt-8">
+                      Prevention Tips
+                    </h2>
+                    <ul className="list-disc ml-6 mb-4">
+                      {plantDiseaseData[plant.disease].prevention_methods.map(
+                        (method, i) => (
+                          <li className="mb-2" key={i}>
+                            {method}
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                </div>
               </div>
             </>
           )}
