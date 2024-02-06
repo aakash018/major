@@ -16,6 +16,7 @@ import axiosInstance from "@/axiosInstance";
 import { PlantsType, ServerResponse } from "@/types/global";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { CircleNotch, WarningCircle } from "@phosphor-icons/react";
 
 const tomatoPlants = [
   { name: "Cherry Delight", plantingDate: "15/02/2023" },
@@ -29,19 +30,22 @@ const tomatoPlants = [
 const Plants = () => {
   const [plants, setPlants] = useState<PlantsType[]>([]);
   const nav = useNavigate();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     (async () => {
       try {
+        setLoading(true);
         const res = await axiosInstance.get<
           ServerResponse & { plants: PlantsType[] }
         >("/plant/getPlants");
-
+        setLoading(false);
         if (res.data.status === "ok") {
           setPlants(res.data.plants);
         } else {
           toast(res.data.message, { style: { color: "red" } });
         }
       } catch {
+        setLoading(false);
         toast("internal server error", { style: { color: "red" } });
       }
     })();
@@ -52,6 +56,18 @@ const Plants = () => {
       <PageTheme>
         <div className="flex justify-center mt-10">
           <div className="mt-5 flex flex-col gap-8 lg:w-[60%] md:w-[90%] w-full">
+            {loading && (
+              <div className="w-full flex flex-col items-center gap-5 mt-10">
+                <CircleNotch size={32} className="animate-spin" />
+                <div>Loading</div>
+              </div>
+            )}
+            {plants.length === 0 && !loading && (
+              <div className="w-full flex flex-col items-center gap-5 mt-10">
+                <WarningCircle size={32} />
+                <div>No Plants added</div>
+              </div>
+            )}
             {plants.map((plant, i) => (
               <Card className="w-full" key={i}>
                 <CardHeader>
@@ -69,7 +85,7 @@ const Plants = () => {
                         <div className="text-muted-foreground font-normal text-sm">
                           {new Date(plant.createdAt).toLocaleString()}
                         </div>
-                        <div className="text-muted-foreground font-normal text-sm text-red-600 font-semibold">
+                        <div className="text-muted-foreground text-sm text-red-600 font-semibold">
                           {plant.disease}
                         </div>
                         <div className="mt-2">

@@ -25,19 +25,22 @@ const randomTip = tips[Math.floor(Math.random() * 5)];
 const Dash = () => {
   const [totalPlantCount, setTotalPlantCount] = useState<number>(0);
   const [recentPlant, setRecentPlant] = useState<PlantsType | null>(null);
+  const [loading, setLoading] = useState(false);
   const navigator = useNavigate();
   useEffect(() => {
     (async () => {
+      setLoading(true);
       try {
         const res = await axiosInstance.get<
           ServerResponse & { totalPlantCount: number; recentPlant: PlantsType }
         >("/plant/getDashInfo");
-
+        setLoading(false);
         if (res.data.status === "ok") {
           setTotalPlantCount(res.data.totalPlantCount);
           setRecentPlant(res.data.recentPlant);
         }
       } catch {
+        setLoading(false);
         toast("failed to load data", {
           style: { color: "red" },
           position: "top-center",
@@ -92,9 +95,14 @@ const Dash = () => {
               <CardHeader>
                 <CardTitle>Recently Added</CardTitle>
               </CardHeader>
-              {!recentPlant && (
-                <div>
-                  <CircleNotch size={32} /> Loading
+              {!recentPlant && loading && (
+                <div className="md;w-[500px] w-[200px] h-full flex justify-center items-center gap-5">
+                  <CircleNotch size={32} className="animate-spin" /> Loading
+                </div>
+              )}
+              {!recentPlant && !loading && (
+                <div className="md:w-[500px] w-[200px] h-full flex justify-center items-center gap-5 p-5 md:p-0">
+                  No data found
                 </div>
               )}
               {recentPlant && (
