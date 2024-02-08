@@ -6,7 +6,8 @@
   "scripts": {
     "wch": "tsc -w",
     "dev": "nodemon -r dotenv/config ./dist/server.js",
-    "start": "node -r dotenv/config ./dist/server.js"
+    "start": "node -r dotenv/config ./dist/server.js",
+    "migrate": "prisma migrate dev --name major"
   },
   "keywords": [],
   "author": "",
@@ -22,7 +23,9 @@
     "express": "^4.18.2",
     "form-data": "^4.0.0",
     "jsonwebtoken": "^9.0.2",
-    "multer": "1.4.5-lts.1"
+    "multer": "1.4.5-lts.1",
+    "nodemon": "^3.0.3",
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
     "@prisma/client": "^5.9.1",

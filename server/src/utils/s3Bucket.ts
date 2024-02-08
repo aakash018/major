@@ -17,11 +17,13 @@ const s3Client = new S3Client({
   region: "eu-central-1",
 });
 
+const bucketName = process.env.BUCKET_NAME;
+
 // Function to get bucket location
 export async function uploadFileToS3(key: string, body: any) {
   try {
     const uploadParams = {
-      Bucket: "major", // Replace with your bucket name
+      Bucket: bucketName, // Replace with your bucket name
       Key: key, // Specify the desired name for the file in the bucket
       Body: body, // Read the local file for upload
     };
@@ -39,7 +41,7 @@ export async function uploadFileToS3(key: string, body: any) {
 export async function getObjectUrl(key: string) {
   try {
     const get_command = new GetObjectCommand({
-      Bucket: "luminex",
+      Bucket: bucketName,
       Key: key,
       ResponseContentDisposition: `attachment; filename=${key}`,
     });

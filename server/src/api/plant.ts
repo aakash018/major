@@ -56,10 +56,12 @@ router.post(
       await uploadFileToS3(originalImgKey, req.file.buffer);
       await uploadFileToS3(UnetImageKey, result);
 
-      const originalImgURL = `https://s3.tebi.io/major/${encodeURIComponent(
+      const bucketName = process.env.BUCKET_NAME;
+
+      const originalImgURL = `https://s3.tebi.io/${bucketName}/${encodeURIComponent(
         originalImgKey
       )}`;
-      const UnetImgURL = `https://s3.tebi.io/major/${encodeURIComponent(
+      const UnetImgURL = `https://s3.tebi.io/${bucketName}/${encodeURIComponent(
         UnetImageKey
       )}`;
 
