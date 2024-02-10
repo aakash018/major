@@ -37,7 +37,7 @@ router.post(
 
       // Make a request to the FastAPI server with the FormData object
       const response = await axios.post(
-        "http://localhost:8000/api/upload",
+        `${process.env.PYTHON_SERVER_ENDPOINT}/api/upload`,
         form,
         {
           headers: {
@@ -48,13 +48,16 @@ router.post(
       const id = generateRandomCode();
       // Send the FastAPI server's response back to the client
       const result = fs.readFileSync("result.png");
+      const result_yolo = fs.readFileSync("image.png");
       const originalImgKey = `uploaded-original/${Date.now().toString()}-${id}- ${
         req.file.originalname
       }`;
       const UnetImageKey = `uploaded-unet/${Date.now().toString()}-${id}.png`;
+      const yoloImageKey = `uploaded-yolo/${Date.now().toString()}-${id}.png`;
 
       await uploadFileToS3(originalImgKey, req.file.buffer);
       await uploadFileToS3(UnetImageKey, result);
+      await uploadFileToS3(yoloImageKey, result_yolo);
 
       const bucketName = process.env.BUCKET_NAME;
 
@@ -64,12 +67,16 @@ router.post(
       const UnetImgURL = `https://s3.tebi.io/${bucketName}/${encodeURIComponent(
         UnetImageKey
       )}`;
+      const yoloImgURL = `https://s3.tebi.io/${bucketName}/${encodeURIComponent(
+        yoloImageKey
+      )}`;
 
       await prisma.plant.create({
         data: {
           imageURL: originalImgURL,
           name: req.body.name,
           unetURL: UnetImgURL,
+          yoloURL: yoloImgURL,
           disease: response.data.disease,
           confidence: response.data.confidence,
           user: {

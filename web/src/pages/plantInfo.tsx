@@ -40,6 +40,7 @@ const PlantInfo = () => {
         });
 
         if (res.data.status === "ok") {
+          console.log(res.data);
           setPlant(res.data.plant);
         } else {
           toast(res.data.message, { style: { color: "red" } });
@@ -108,22 +109,30 @@ const PlantInfo = () => {
                     defaultValue="Unet"
                     className="w-full flex flex-col gap-1"
                   >
-                    <TabsList className="grid w-full grid-cols-2">
+                    <TabsList className="grid w-full grid-cols-3">
+                      <TabsTrigger value="Original">Original</TabsTrigger>
                       <TabsTrigger value="Unet">Unet</TabsTrigger>
                       <TabsTrigger value="YOLO">YOLO</TabsTrigger>
                     </TabsList>
-                    <TabsContent value="Unet">
+                    <TabsContent value="Original">
                       <img
                         src={plant.imageURL}
                         alt=""
-                        className="w-full h-[300px] md:h-[600px] md:object-top object-cover rounded-lg"
+                        className="w-full h-[300px] md:h-[600px] md:object-top object-contain rounded-lg"
+                      />
+                    </TabsContent>
+                    <TabsContent value="Unet">
+                      <img
+                        src={plant.unetURL}
+                        alt=""
+                        className="w-full h-[300px] md:h-[600px] md:object-top object-contain rounded-lg"
                       />
                     </TabsContent>
                     <TabsContent value="YOLO">
                       <img
-                        src={plant.unetURL}
+                        src={plant.yoloURL}
                         alt=""
-                        className="w-full h-[300px] md:h-[600px] md:object-top object-cover rounded-lg"
+                        className="w-full h-[300px] md:h-[600px] md:object-top object-contain rounded-lg"
                       />
                     </TabsContent>
                   </Tabs>

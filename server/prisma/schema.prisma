@@ -24,6 +24,7 @@ model Plant {
     isFavourited Boolean  @default(false)
     imageURL     String
     unetURL      String
+    yoloURL      String
     disease      String
     confidence   Float
     createdAt    DateTime @default(now())

@@ -6,6 +6,7 @@ from io import BytesIO
 import tensorflow as tf
 import shutil
 import os
+from ultralytics import YOLO
 # Load your trained model (replace 'your_model_path' with the actual path)
 from keras.models import load_model
 from keras.preprocessing.image import ImageDataGenerator
@@ -24,6 +25,7 @@ cnn_model = load_model(cnn_model_path)
 
 
 model = load_model("./unet_binary_1.hdf5", compile=False)
+yolo_model = YOLO('./best.pt')
 
 class_names = [
     "Tomato Bacterial spot",
@@ -86,22 +88,21 @@ def main():
     # Get image URL from the user
     image_url = "./uploaded_photos/uploaded_photo.jpg"
 
-    # Preprocess the image
+    new_results = yolo_model.predict(image_url, conf=0.2)
+    new_result_array = new_results[0].plot()
+    
     processed_image = preprocess_image(image_url)
-
-    image_height=256
-    image_width=256
-
-
-    # cnn_preprocressed = tf.keras.preprocessing.image.load_img(image_url, target_size=(image_height, image_width))
 
     predicted_class, confidence = predict_single_image_cnn(cnn_model, image_url)
     print(predicted_class, confidence)
 
     # Perform inference
     result = model.predict(processed_image)
-    print(result.shape)
-    # Save the result
+
+    image_yolo = Image.fromarray(np.uint8(new_result_array))
+
+    image_yolo.save('../image.png')
+
     save_result(result, '../result.png')
     return predicted_class, confidence
 
@@ -145,9 +146,7 @@ async def upload_photo(file: UploadFile = File(...)):
 
 
         predicted_class, confidence = main()
-        # Process the uploaded photo (you can save it to a directory, etc.)
-        # For now, just returning the filename and content type
-        # return FileResponse("result.png", media_type="image/png")
+        
         return {"status": "ok", "disease": predicted_class, "confidence": confidence}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")

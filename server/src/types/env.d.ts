@@ -7,6 +7,7 @@ declare global {
       REFRESH_TOKEN_SECRET: string;
       S3ACCESS: string;
       S3SECRET: string;
+      PYTHON_SERVER_ENDPOINT: string;
     }
   }
 }

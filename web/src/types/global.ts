@@ -34,4 +34,5 @@ export interface PlantsType {
   isFavourited: boolean;
   imageURL: string;
   unetURL: string;
+  yoloURL: string;
 }
