@@ -44,14 +44,26 @@ const Add: React.FC = () => {
       const res = await axiosInstance.post("/plant/upload", formData);
       setLoading(false);
       // Optionally, you can handle the response from the Express server if needed
-      console.log(res.data);
-      console.log("Photo uploaded successfully to Express server.");
-      nav("/");
-      toast("plant uploaded");
+
+      if (res.data.status === "ok") {
+        console.log(res.data);
+        console.log("Photo uploaded successfully to Express server.");
+        nav("/");
+        toast("plant uploaded", { position: "top-right" });
+      } else {
+        toast("error uploading plant", {
+          style: { color: "red" },
+          position: "top-right",
+        });
+      }
     } catch (error) {
       setLoading(false);
+      toast("error uploading plant", {
+        style: { color: "red" },
+        position: "top-right",
+      });
 
-      console.error("Error uploading photo from React:", error);
+      console.log("Error uploading photo from React:", error);
     }
   };
 

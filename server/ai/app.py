@@ -2,7 +2,7 @@ from pydantic import BaseModel
 import requests
 from PIL import Image
 import numpy as np
-from io import BytesIO
+from skimage.transform import resize
 import tensorflow as tf
 import shutil
 import os
@@ -24,7 +24,7 @@ cnn_model_path='./Tomato_Model_Export_2'
 cnn_model = load_model(cnn_model_path)
 
 
-model = load_model("./unet_binary_1.hdf5", compile=False)
+model = load_model("./unet_model_2_25_epoch.hdf5", compile=False)
 yolo_model = YOLO('./best.pt')
 
 class_names = [
@@ -55,56 +55,55 @@ def predict_single_image_cnn(model, img_path):
     return predicted_class, confidence
 
 
-def preprocess_image(image_path):
-    img = Image.open(image_path)
-
-    # Resize the image to 256x256 with padding
-    img = img.resize((256, 256), Image.ANTIALIAS)
-
-    # Convert image to grayscale
-    img = img.convert('L')
-
-    # img_array = np.array(img, dtype=np.uint8)  # Convert to unsigned byte
-    img_array = np.array(img) / 255.0
-
-    # Convert image to numpy array and normalize pixel values
-    # img_array = np.array(img) / 255.0
-
-    # Add batch and channel dimensions
-    img_array = np.expand_dims(np.expand_dims(img_array, axis=-1), axis=0)
-
-    return img_array
+def preprocess_image(img_path, img_width=128, img_height=128):
+    img = Image.open(img_path)
+    img = np.array(img)
+    img = resize(img, (img_height, img_width), mode='constant', preserve_range=True)
+    return img
 
 def save_result(result, output_path='result.png'):
     # Extract the relevant channel and reshape
-    result_channel = result[0, :, :, 0]
+    print(result.shape)
+    result_channel = result[:, :]
 
     # Assuming the result is an image (modify this based on your actual output)
     result_img = Image.fromarray((result_channel * 255).astype(np.uint8))
 
     # Save the image to a file
     result_img.save(output_path)
+
+
 def main():
     # Get image URL from the user
-    image_url = "./uploaded_photos/uploaded_photo.jpg"
+    try:
+        image_url = "./uploaded_photos/uploaded_photo.jpg"
 
-    new_results = yolo_model.predict(image_url, conf=0.2)
-    new_result_array = new_results[0].plot()
-    
-    processed_image = preprocess_image(image_url)
+        new_results = yolo_model.predict(image_url, conf=0.2)
+        new_result_array = new_results[0].plot()
+        predicted_class, confidence = predict_single_image_cnn(cnn_model, image_url)
+        
+        print(predicted_class, confidence)
 
-    predicted_class, confidence = predict_single_image_cnn(cnn_model, image_url)
-    print(predicted_class, confidence)
+        IMG_WIDTH = 128
+        IMG_HEIGHT = 128
 
-    # Perform inference
-    result = model.predict(processed_image)
+        img = preprocess_image(image_url, IMG_WIDTH, IMG_HEIGHT)
+        img = img.reshape((1,) + img.shape)
 
-    image_yolo = Image.fromarray(np.uint8(new_result_array))
+        prediction = model.predict(img)
 
-    image_yolo.save('../image.png')
+        binary_mask = (prediction > 0.5).astype(np.uint8)
+        result = binary_mask.squeeze()
 
-    save_result(result, '../result.png')
-    return predicted_class, confidence
+        # Perform inference
+        image_yolo = Image.fromarray(np.uint8(new_result_array))
+
+        image_yolo.save('../image.png')
+
+        save_result(result, '../result.png')
+        return predicted_class, confidence
+    except Exception as e:
+        print(e)
 
 app = FastAPI()
 

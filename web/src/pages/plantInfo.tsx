@@ -106,7 +106,7 @@ const PlantInfo = () => {
                     Segmentation
                   </div>
                   <Tabs
-                    defaultValue="Unet"
+                    defaultValue="Original"
                     className="w-full flex flex-col gap-1"
                   >
                     <TabsList className="grid w-full grid-cols-3">
