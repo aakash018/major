@@ -17,16 +17,18 @@ model User {
 }
 
 model Plant {
-    id           String   @id @default(cuid())
-    name         String
-    user         User     @relation(fields: [userId], references: [id])
-    userId       Int
-    isFavourited Boolean  @default(false)
-    imageURL     String
-    unetURL      String
-    yoloURL      String
-    disease      String
-    confidence   Float
-    createdAt    DateTime @default(now())
-    updatedAt    DateTime @updatedAt
+    id                 String   @id @default(cuid())
+    name               String
+    user               User     @relation(fields: [userId], references: [id])
+    userId             Int
+    isFavourited       Boolean  @default(false)
+    imageURL           String
+    unetURL            String
+    unetClassification String
+    yoloURL            String
+    yoloClassification String
+    disease            String
+    confidence         Float
+    createdAt          DateTime @default(now())
+    updatedAt          DateTime @updatedAt
 }

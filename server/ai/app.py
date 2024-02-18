@@ -23,36 +23,27 @@ print("Files in current directory:", os.listdir())
 cnn_model_path='./Tomato_Model_Export_2'
 cnn_model = load_model(cnn_model_path)
 
-
-model = load_model("./unet_model_2_25_epoch.hdf5", compile=False)
+cnn_clasification_model = load_model("./classification_colab_transfer_learning_fine_tuning_10+100_epoch.h5", compile=False)
+model_unet = load_model("./unet_model_2_25_epoch.hdf5", compile=False)
 yolo_model = YOLO('./best.pt')
 
-class_names = [
-    "Tomato Bacterial spot",
-    "Tomato Early blight",
-    "Tomato Late blight",
-    "Tomato Leaf Mold",
-    "Tomato Septoria leaf spot",
-    "Tomato Spider mites Two spotted spider mite",
-    "Tomato Target Spot",
-    "Tomato Tomato YellowLeaf Curl Virus",
-    "Tomato Tomato mosaic virus",
-    "Early Blight",
-    "Tomato healthy"
-]   
+class_names = ['Tomato_Bacterial_spot',
+ 'Tomato_Late_blight',
+ 'Tomato_Leaf_Mold',
+ 'Tomato_healthy']
 
-def predict_single_image_cnn(model, img_path):
-    IMAGE_SIZE=256
-    img = tf.keras.preprocessing.image.load_img(img_path, target_size=(IMAGE_SIZE, IMAGE_SIZE))
-    img_array = tf.keras.preprocessing.image.img_to_array(img)
-    img_array = img_array / 255.0  # Normalize pixel values
-    img_array = tf.expand_dims(img_array, 0)
+# def predict_single_image_cnn(model, img_path):
+#     IMAGE_SIZE=256
+#     img = tf.keras.preprocessing.image.load_img(img_path, target_size=(IMAGE_SIZE, IMAGE_SIZE))
+#     img_array = tf.keras.preprocessing.image.img_to_array(img)
+#     img_array = img_array / 255.0  # Normalize pixel values
+#     img_array = tf.expand_dims(img_array, 0)
 
-    predictions = model.predict(img_array)
-    predicted_class_idx = np.argmax(predictions[0])
-    predicted_class = class_names[predicted_class_idx]
-    confidence = round(100 * np.max(predictions[0]), 2)
-    return predicted_class, confidence
+#     predictions = model.predict(img_array)
+#     predicted_class_idx = np.argmax(predictions[0])
+#     predicted_class = class_names[predicted_class_idx]
+#     confidence = round(100 * np.max(predictions[0]), 2)
+#     return predicted_class, confidence
 
 
 def preprocess_image(img_path, img_width=128, img_height=128):
@@ -78,11 +69,27 @@ def main():
     try:
         image_url = "./uploaded_photos/uploaded_photo.jpg"
 
-        new_results = yolo_model.predict(image_url, conf=0.2)
-        new_result_array = new_results[0].plot()
-        predicted_class, confidence = predict_single_image_cnn(cnn_model, image_url)
+        img_unet = Image.open(image_url)
+        original_width, original_height = img_unet.size
+
+       
+        # predicted_class, confidence = predict_single_image_cnn(cnn_model, image_url)
         
-        print(predicted_class, confidence)
+        # FOR CNN CLASSIFICATION
+
+        img_for_cnn = tf.keras.utils.load_img(image_url, target_size=(160, 160))
+        
+        img_array_cnn = tf.keras.utils.img_to_array(img_for_cnn)
+        img_array_cnn = tf.expand_dims(img_array_cnn, 0)
+
+        predicted_class = cnn_clasification_model.predict(img_array_cnn)
+        score = tf.nn.softmax(predicted_class[0])
+
+        print("PREDICTION", class_names[np.argmax(score)])
+
+        ###
+
+        # UNET
 
         IMG_WIDTH = 128
         IMG_HEIGHT = 128
@@ -90,18 +97,28 @@ def main():
         img = preprocess_image(image_url, IMG_WIDTH, IMG_HEIGHT)
         img = img.reshape((1,) + img.shape)
 
-        prediction = model.predict(img)
+       
+
+        prediction = model_unet.predict(img)
 
         binary_mask = (prediction > 0.5).astype(np.uint8)
         result = binary_mask.squeeze()
 
-        # Perform inference
+
+        result = resize(result, (original_height, original_width), mode='constant', preserve_range=True)
+        save_result(result, '../result.png')
+
+        ###
+
+
+        # YOLO
+        new_results = yolo_model.predict(image_url, conf=0.2)
+        new_result_array = new_results[0].plot()
         image_yolo = Image.fromarray(np.uint8(new_result_array))
 
         image_yolo.save('../image.png')
 
-        save_result(result, '../result.png')
-        return predicted_class, confidence
+        return "predicted_class", 20.1
     except Exception as e:
         print(e)
 

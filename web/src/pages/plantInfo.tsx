@@ -121,11 +121,16 @@ const PlantInfo = () => {
                         className="w-full h-[300px] md:h-[600px] md:object-top object-contain rounded-lg"
                       />
                     </TabsContent>
-                    <TabsContent value="Unet">
+                    <TabsContent value="Unet" className="relative">
+                      <img
+                        src={plant.imageURL}
+                        alt=""
+                        className="absolute top-0 left-0 w-full h-[300px] md:h-[600px] md:object-top object-contain rounded-lg"
+                      />
                       <img
                         src={plant.unetURL}
                         alt=""
-                        className="w-full h-[300px] md:h-[600px] md:object-top object-contain rounded-lg"
+                        className="w-full h-[300px] md:h-[600px] md:object-top object-contain rounded-lg mix-blend-exclusion"
                       />
                     </TabsContent>
                     <TabsContent value="YOLO">

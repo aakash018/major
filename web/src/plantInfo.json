@@ -13,6 +13,20 @@
         "Avoid overhead irrigation."
       ]
     },
+    "predicted_class": {
+      "recovery_days": 14,
+      "about_infection": "Bacterial spot is a common bacterial disease affecting tomatoes. It spreads through contaminated water and plant debris.",
+      "treatment_steps": [
+        "Remove and destroy infected plants.",
+        "Apply copper-based fungicides.",
+        "Practice crop rotation."
+      ],
+      "prevention_methods": [
+        "Use disease-resistant tomato varieties.",
+        "Water at the base to avoid splashing.",
+        "Avoid overhead irrigation."
+      ]
+    },
     "Tomato Early blight": {
       "recovery_days": 10,
       "about_infection": "Early blight is a fungal disease that affects tomato leaves. It is caused by the fungus Alternaria solani and thrives in warm, humid conditions.",
