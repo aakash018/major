@@ -1,155 +1,50 @@
 {
-    "Tomato Bacterial spot": {
-      "recovery_days": 14,
-      "about_infection": "Bacterial spot is a common bacterial disease affecting tomatoes. It spreads through contaminated water and plant debris.",
-      "treatment_steps": [
-        "Remove and destroy infected plants.",
-        "Apply copper-based fungicides.",
-        "Practice crop rotation."
-      ],
-      "prevention_methods": [
-        "Use disease-resistant tomato varieties.",
-        "Water at the base to avoid splashing.",
-        "Avoid overhead irrigation."
-      ]
-    },
-    "predicted_class": {
-      "recovery_days": 14,
-      "about_infection": "Bacterial spot is a common bacterial disease affecting tomatoes. It spreads through contaminated water and plant debris.",
-      "treatment_steps": [
-        "Remove and destroy infected plants.",
-        "Apply copper-based fungicides.",
-        "Practice crop rotation."
-      ],
-      "prevention_methods": [
-        "Use disease-resistant tomato varieties.",
-        "Water at the base to avoid splashing.",
-        "Avoid overhead irrigation."
-      ]
-    },
-    "Tomato Early blight": {
-      "recovery_days": 10,
-      "about_infection": "Early blight is a fungal disease that affects tomato leaves. It is caused by the fungus Alternaria solani and thrives in warm, humid conditions.",
-      "treatment_steps": [
-        "Remove affected leaves promptly.",
-        "Apply fungicides containing chlorothalonil.",
-        "Mulch to prevent soil splash."
-      ],
-      "prevention_methods": [
-        "Space plants for good air circulation.",
-        "Water at the base to keep foliage dry.",
-        "Rotate crops to reduce disease pressure."
-      ]
-    },
-    "Tomato Late blight": {
-      "recovery_days": 21,
-      "about_infection": "Late blight is a devastating disease caused by the oomycete pathogen Phytophthora infestans. It affects tomatoes and can spread rapidly in cool, wet conditions.",
-      "treatment_steps": [
-        "Remove and destroy infected plants.",
-        "Apply fungicides containing copper or mancozeb.",
-        "Avoid overhead irrigation."
-      ],
-      "prevention_methods": [
-        "Choose resistant tomato varieties.",
-        "Ensure good air circulation in the garden.",
-        "Space plants to reduce humidity."
-      ]
-    },
-    "Tomato Leaf Mold": {
-      "recovery_days": 14,
-      "about_infection": "Leaf mold is a fungal disease caused by the pathogen Fulvia fulva. It primarily affects tomato foliage and thrives in warm and humid conditions.",
-      "treatment_steps": [
-        "Remove and destroy infected leaves.",
-        "Apply fungicides containing copper or chlorothalonil.",
-        "Ensure proper ventilation in the greenhouse."
-      ],
-      "prevention_methods": [
-        "Provide adequate spacing between plants.",
-        "Water at the base to avoid wetting foliage.",
-        "Use resistant tomato varieties."
-      ]
-    },
-    "Tomato Septoria leaf spot": {
-      "recovery_days": 14,
-      "about_infection": "Septoria leaf spot is a fungal disease caused by the pathogen Septoria lycopersici. It affects tomato leaves and spreads through splashing water and infected plant debris.",
-      "treatment_steps": [
-        "Remove and destroy infected leaves.",
-        "Apply fungicides containing copper or mancozeb.",
-        "Ensure proper plant spacing for air circulation."
-      ],
-      "prevention_methods": [
-        "Water at the base to avoid splashing.",
-        "Mulch around plants to prevent soil contact.",
-        "Prune lower branches for better air circulation."
-      ]
-    },
-    "Tomato Spider mites Two spotted spider mite": {
-      "recovery_days": 7,
-      "about_infection": "Spider mites, including the two-spotted spider mite, are arachnids that feed on plant sap. They can cause stippling and discoloration of tomato leaves.",
-      "treatment_steps": [
-        "Spray affected plants with water to dislodge mites.",
-        "Apply insecticidal soap or neem oil.",
-        "Introduce predatory mites for biological control."
-      ],
-      "prevention_methods": [
-        "Maintain proper humidity to discourage mite infestations.",
-        "Regularly inspect plants for early signs of infestation.",
-        "Avoid over-fertilization, which can attract mites."
-      ]
-    },
-    "Tomato Target Spot": {
-      "recovery_days": 14,
-      "about_infection": "Target spot, caused by the fungus Corynespora cassiicola, affects tomato leaves and can result in circular lesions with a target-like appearance.",
-      "treatment_steps": [
-        "Remove and destroy infected leaves.",
-        "Apply fungicides containing chlorothalonil or mancozeb.",
-        "Promote good air circulation by proper plant spacing."
-      ],
-      "prevention_methods": [
-        "Use disease-resistant tomato varieties.",
-        "Water at the base to avoid wetting foliage.",
-        "Apply preventive fungicides during periods of high humidity."
-      ]
-    },
-    "Tomato Tomato YellowLeaf Curl Virus": {
-      "recovery_days": 0,
-      "about_infection": "Tomato Yellow Leaf Curl Virus (TYLCV) is a viral disease transmitted by whiteflies. Infected plants may exhibit yellowing, curling, and stunted growth.",
-      "treatment_steps": ["No cure for viral infections. Remove and destroy infected plants."],
-      "prevention_methods": [
-        "Use reflective mulches to deter whiteflies.",
-        "Introduce beneficial insects for biological control.",
-        "Regularly monitor and control whitefly populations."
-      ]
-    },
-    "Tomato Tomato mosaic virus": {
-      "recovery_days": 0,
-      "about_infection": "Tomato mosaic virus (ToMV) is a common viral pathogen affecting tomatoes. It causes mosaic patterns on leaves, stunted growth, and reduced fruit quality.",
-      "treatment_steps": ["No cure for viral infections. Remove and destroy infected plants."],
-      "prevention_methods": [
-        "Use virus-free seeds and transplants.",
-        "Practice strict sanitation to prevent virus spread.",
-        "Control aphid vectors through insecticides or natural predators."
-      ]
-    },
-    "Early Blight": {
-      "recovery_days": 10,
-      "about_infection": "Early blight is a fungal disease affecting various plants, including tomatoes. It is caused by the fungus Alternaria solani.",
-      "treatment_steps": [
-        "Remove affected leaves promptly.",
-        "Apply fungicides containing chlorothalonil.",
-        "Mulch to prevent soil splash."
-      ],
-      "prevention_methods": [
-        "Space plants for good air circulation.",
-        "Water at the base to keep foliage dry.",
-        "Rotate crops to reduce disease pressure."
-      ]
-    },
-    "Tomato healthy": {
-      "recovery_days": 0,
-      "about_infection": "No specific disease detected. The plant is healthy.",
-      "treatment_steps": ["Maintain good plant care practices."],
-      "prevention_methods": ["Regularly inspect plants for signs of diseases."]
-    }
+  "Tomato Late Blight": {
+    "recovery_days": 21,
+    "about_infection": "Late blight is a devastating disease caused by the oomycete pathogen Phytophthora infestans. It affects tomatoes and can spread rapidly in cool, wet conditions.",
+    "treatment_steps": [
+      "Remove and destroy infected plants.",
+      "Apply fungicides containing copper or mancozeb.",
+      "Avoid overhead irrigation."
+    ],
+    "prevention_methods": [
+      "Choose resistant tomato varieties.",
+      "Ensure good air circulation in the garden.",
+      "Space plants to reduce humidity."
+    ]
+  },
+  "Tomato Leaf Mold": {
+    "recovery_days": 14,
+    "about_infection": "Leaf mold is a fungal disease caused by the pathogen Fulvia fulva. It primarily affects tomato foliage and thrives in warm and humid conditions.",
+    "treatment_steps": [
+      "Remove and destroy infected leaves.",
+      "Apply fungicides containing copper or chlorothalonil.",
+      "Ensure proper ventilation in the greenhouse."
+    ],
+    "prevention_methods": [
+      "Provide adequate spacing between plants.",
+      "Water at the base to avoid wetting foliage.",
+      "Use resistant tomato varieties."
+    ]
+  },
+  "Tomato Leaf Spot": {
+    "recovery_days": 14,
+    "about_infection": "Septoria leaf spot is a fungal disease caused by the pathogen Septoria lycopersici. It affects tomato leaves and spreads through splashing water and infected plant debris.",
+    "treatment_steps": [
+      "Remove and destroy infected leaves.",
+      "Apply fungicides containing copper or mancozeb.",
+      "Ensure proper plant spacing for air circulation."
+    ],
+    "prevention_methods": [
+      "Water at the base to avoid splashing.",
+      "Mulch around plants to prevent soil contact.",
+      "Prune lower branches for better air circulation."
+    ]
+  },
+  "Tomato Healthy": {
+    "recovery_days": 0,
+    "about_infection": "No specific disease detected. The plant is healthy.",
+    "treatment_steps": ["Maintain good plant care practices."],
+    "prevention_methods": ["Regularly inspect plants for signs of diseases."]
   }
-  
+}

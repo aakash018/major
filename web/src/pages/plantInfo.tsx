@@ -89,7 +89,7 @@ const PlantInfo = () => {
                     monthAbbreviations[new Date(plant.createdAt).getMonth()]
                   }  ${new Date(plant.createdAt).getFullYear()}`}
                 />
-                <NumberCard
+                {/* <NumberCard
                   title={"Recovery Days"}
                   number={plantDiseaseData[plant.disease].recovery_days}
                   desc={"Days"}
@@ -98,7 +98,7 @@ const PlantInfo = () => {
                   title={"Confidence"}
                   number={plant.confidence}
                   desc={"%"}
-                />
+                /> */}
               </div>
               <div className="md:w-full md:flex md:justify-center">
                 <div className="md:w-[80%]">
@@ -132,6 +132,12 @@ const PlantInfo = () => {
                         alt=""
                         className="w-full h-[300px] md:h-[600px] md:object-top object-contain rounded-lg mix-blend-exclusion"
                       />
+                      <div className="shadow border w-fit p-5 rounded-lg">
+                        <div className="font-bold">CNN Predicated Results</div>
+                        <div className="text-red-500">
+                          {plant.cnnClassification}
+                        </div>
+                      </div>
                     </TabsContent>
                     <TabsContent value="YOLO">
                       <img
@@ -139,6 +145,12 @@ const PlantInfo = () => {
                         alt=""
                         className="w-full h-[300px] md:h-[600px] md:object-top object-contain rounded-lg"
                       />
+                      <div className="shadow border w-fit p-5 rounded-lg">
+                        <div className="font-bold">YOLO Predicated Results</div>
+                        <div className="text-red-500">
+                          {plant.yoloClassification}
+                        </div>
+                      </div>
                     </TabsContent>
                   </Tabs>
                 </div>

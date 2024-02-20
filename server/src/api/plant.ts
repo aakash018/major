@@ -70,13 +70,15 @@ router.post(
       const yoloImgURL = `https://s3.tebi.io/${bucketName}/${encodeURIComponent(
         yoloImageKey
       )}`;
-
+      console.log(response);
       await prisma.plant.create({
         data: {
           imageURL: originalImgURL,
           name: req.body.name,
           unetURL: UnetImgURL,
           yoloURL: yoloImgURL,
+          cnnClassification: response.data.cnn_predictions,
+          yoloClassification: response.data.disease,
           disease: response.data.disease,
           confidence: response.data.confidence,
           user: {

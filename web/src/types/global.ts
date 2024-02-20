@@ -10,17 +10,10 @@ export interface User {
   id: number;
 }
 type DiseaseType =
-  | "Tomato Bacterial spot"
-  | "Tomato Early blight"
-  | "Tomato Late blight"
+  | "Tomato Late Blight"
   | "Tomato Leaf Mold"
-  | "Tomato Septoria leaf spot"
-  | "Tomato Spider mites Two spotted spider mite"
-  | "Tomato Target Spot"
-  | "Tomato Tomato YellowLeaf Curl Virus"
-  | "Tomato Tomato mosaic virus"
-  | "Early Blight"
-  | "Tomato healthy";
+  | "Tomato Leaf Spot"
+  | "Tomato Healthy";
 
 export interface PlantsType {
   id: string;
@@ -31,6 +24,8 @@ export interface PlantsType {
   confidence: string;
   user: User;
   userId: number;
+  cnnClassification: string;
+  yoloClassification: string;
   isFavourited: boolean;
   imageURL: string;
   unetURL: string;

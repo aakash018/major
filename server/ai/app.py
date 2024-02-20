@@ -85,7 +85,7 @@ def main():
         predicted_class = cnn_clasification_model.predict(img_array_cnn)
         score = tf.nn.softmax(predicted_class[0])
 
-        print("PREDICTION", class_names[np.argmax(score)])
+        cnn_predictions = class_names[np.argmax(score)]
 
         ###
 
@@ -113,12 +113,31 @@ def main():
 
         # YOLO
         new_results = yolo_model.predict(image_url, conf=0.2)
+        new_result = new_results[0]
         new_result_array = new_results[0].plot()
         image_yolo = Image.fromarray(np.uint8(new_result_array))
 
-        image_yolo.save('../image.png')
+        extracted_masks = new_result.masks.data
+        detected_boxes = new_result.boxes.data
+        class_labels = detected_boxes[:, -1].int().tolist()
+        masks_by_class = {name: [] for name in new_result.names.values()}
 
-        return "predicted_class", 20.1
+        for mask, class_id in zip(extracted_masks, class_labels):
+            class_name = new_result.names[class_id]  # Map class ID to class name
+            masks_by_class[class_name].append(mask.cpu().numpy())
+
+       
+        highest_mask = 0
+        yolo_predicated_class = ""
+        for class_name, masks in masks_by_class.items():
+            if(len(masks) > highest_mask):
+                highest_mask = len(masks)
+                yolo_predicated_class = class_name
+            print(f"Class Name: {class_name}, Number of Masks: {len(masks)}")
+
+        image_yolo.save('../image.png')
+        new_predicated_class = yolo_predicated_class.replace("_", " ")
+        return new_predicated_class , 20.1, cnn_predictions
     except Exception as e:
         print(e)
 
@@ -161,12 +180,12 @@ async def upload_photo(file: UploadFile = File(...)):
             shutil.copyfileobj(file.file, f)
 
 
-        predicted_class, confidence = main()
+        predicted_class, confidence, cnn_predictions = main()
         
-        return {"status": "ok", "disease": predicted_class, "confidence": confidence}
+        return {"status": "ok", "disease": predicted_class, "confidence": confidence, "cnn_predictions": cnn_predictions}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

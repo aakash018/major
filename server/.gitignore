@@ -4,6 +4,6 @@ dist
 Tomato_Model_Export_2
 unet_binary_1.hdf5
 unet_binary_2.hdf5
-best.pt
+
 classification_unet_colab_100_epoch.h5
 unet_model_2_25_epoch.hdf5
